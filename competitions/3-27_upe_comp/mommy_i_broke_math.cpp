@@ -175,41 +175,7 @@ bool Expression::evaluate_parens() // first check ( ... ), evaluate recursively
 
 bool Expression::evaluate_exponents() // then check #^#
 {
-  int recent_number_index = -1;
-  int recent_number_size = 0;
-
-  //bool found_valid_expo_start = false; // if encounters ### ^, this is true.
-  std::stringstream ss;
-  for (int i = 0; i < expression.size(); i++) {
-    if (expression[i] == ' ') continue;
-    if (expression[i] == '-' || (expression[i] >= '0' && expression[i] <= '9')) {
-      recent_number_index = i;
-      recent_number_size = 1;
-      found_num = true;
-      i++;
-
-      while (i < expression.size() && expression[i] >= '0' && expression[i] <= '9') {
-	recent_number_size++;
-	i++;
-      }
-    }
-    else {
-
-      if (expression[i] == '^') { 
-	if (recent_number_index == -1 || recent_number_size == 0) return false; // break out, incorrect exp
-	ss << expression.substr(recent_number_index, recent_number_size);
-	int value;
-	ss >> value; // get a in a^b
-	i++;
-	recent_number_index = -1; recent_number_size = 0;
-	while (i < expression.size() && expression[i] == ' ') i++;
-	while (
-      }
-      else { // encountered anything, / * +, whatever
-	
-      }
-    }
-  }
+  
 }
 
 bool Expression::evaluate_mult_div()
