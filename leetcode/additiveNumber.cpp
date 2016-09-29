@@ -11,7 +11,8 @@
     
     0 is a valid number, but numbers can't have preceding 0s (i.e. 00 or 09)
 
-    this is O(n^3), apparently this is really slow LOL (beat 3% of solutions)
+    theoretically O(n^3) i think, but prunes pretty decently
+    beat 30ish% of solutions, ran pretty fast
 */
 
 class Solution {
@@ -36,13 +37,14 @@ public:
         ss.clear();
         if (first > UINT_MAX - second) return false; // break out for overflow
         while (num.size() > rebuildNum.size()) {
+            if (num.substr(0, rebuildNum.size()).compare(rebuildNum) != 0) return false;
             third = first + second;
             ss << third;
             string thirdStr;
             ss >> thirdStr;
             ss.clear();
             rebuildNum += thirdStr;
-            cout << rebuildNum << endl;
+            // cout << rebuildNum << endl;
             first = second;
             second = third;
         }
