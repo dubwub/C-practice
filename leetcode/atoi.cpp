@@ -11,13 +11,6 @@
 class Solution {
 public:
     int myAtoi(string str) {
-        stringstream ss;
-        string strIntMax, strIntMin;
-        ss << INT_MAX;
-        ss >> strIntMax;
-        ss.clear();
-        ss << INT_MIN;
-        ss >> strIntMin;
         if (str.size() == 0) return 0;
         int value = 0;
         bool negative = false;
@@ -25,28 +18,13 @@ public:
         bool encounteredSign = false;
         for (int i = 0; i < str.size(); i++) {
             if (str[i] >= '0' && str[i] <= '9') {
-                if (encounteredNumber == false) {
-                    encounteredNumber = true;
-                    int numberLength = 1;
-                    for (int j = i+1; j < str.size(); j++) { // slow way of implementing INT_MAX/INT_MIN checking, but it works
-                        if (str[j] >= '0' && str[j] <= '9')
-                            numberLength++;
-                        else
-                            break;
-                    }
-                    if (numberLength > strIntMax.size()) {
-                        if (negative) return INT_MIN;
-                        else return INT_MAX;
-                    }
-                    else if (numberLength == strIntMax.size()) {
-                        string numberSubStr = str.substr(i, numberLength);
-                        if (numberSubStr >= strIntMax && !negative) {
-                            return INT_MAX;
-                        }
-                        else if (numberSubStr >= strIntMin.substr(1) && negative) {
-                            return INT_MIN;
-                        }
-                    }
+                encounteredNumber = true;
+                if (value > INT_MAX / 10) return (negative ? INT_MIN : INT_MAX);
+                if (value == INT_MAX / 10 && str[i] - '0' > INT_MAX % 10 && !negative)
+                    return INT_MAX;
+                if (value == INT_MAX / 10 && str[i] - '0' > -1 * (INT_MIN % 10) && negative) {
+                    // cout << str[i] - '0' << ", " << -1 * (INT_MIN % 10) << endl;
+                    return INT_MIN;
                 }
                 value *= 10;
                 value += str[i] - '0';
