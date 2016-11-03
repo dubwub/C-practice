@@ -1,6 +1,8 @@
 /*
 	https://community.topcoder.com/stat?c=problem_statement&pm=2915&rd=5853
 	987.86/1000!!!
+
+	solved using BFS with 3 boards (one represents not having taken any pieces, one with knight taken, one with queen taken)
 */
 #include <string>
 #include <vector>
